@@ -13,7 +13,7 @@ if (argv.includes("-h") || argv.includes("--help")) {
   console.log(`hakuna-mcp — Hakuna MCP server (stdio)
 Usage: hakuna-mcp
 Env:   HAKUNA_TOKEN=<token>
-Docs:  https://github.com/krautnerds/hakuna-mcp`);
+Docs:  https://github.com/lucasjahn/hakuna-mcp`);
   process.exit(0);
 }
 

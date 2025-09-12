@@ -25,8 +25,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/krautnerds/hakuna-mcp.git"
+    "url": "git+https://github.com/lucasjahn/hakuna-mcp.git"
   },
+  "bugs": {
+    "url": "https://github.com/lucasjahn/hakuna-mcp/issues"
+  },
+  "homepage": "https://github.com/lucasjahn/hakuna-mcp#readme",
   "author": "Lucas Jahn",
   "license": "MIT",
   "publishConfig": {
