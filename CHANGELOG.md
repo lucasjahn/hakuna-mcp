@@ -1,18 +1,24 @@
 # Changelog
 
-This project follows Conventional Commits for commit messages and maintains this changelog manually.
+This project follows Conventional Commits and maintains this changelog manually.
 
-Guidelines
-- Group entries by version and date.
-- Use sections when helpful: Added, Changed, Fixed, Removed.
-- Keep entries short and user-facing.
-
-Template
-```
 ## [0.2.0] - 2025-09-12
+
 ### Added
-- Initial public release: MCP server for Hakuna (hakuna.ch), CLI `hakuna-mcp`, tools documented in TOOLS.md.
-```
+- Unofficial MCP server for Hakuna (hakuna.ch) with stdio transport.
+- CLI binary `hakuna-mcp`; requires `HAKUNA_TOKEN` env var.
+- Tools: `list_time_entries`, `get_time_entry`, `create_time_entry`, `update_time_entry`, `delete_time_entry` (disabled), `get_timer`, `start_timer`, `stop_timer`, `find_projects`, `find_tasks`, `total_hours_in_period`, `hours_by_project`, `hours_on_day`, `clear_catalog_cache`.
+- Parameter guide (`TOOLS.md`) with exact date/time formats and input types.
+- HTTP client with rate-limit handling and simple in-memory catalog cache for projects/tasks.
+- README with configuration examples, npm badges, and safety notes.
+
+### Security
+- Requires `HAKUNA_TOKEN`; secrets are never logged.
+- Deletion action intentionally disabled to prevent data loss.
+
+### Packaging
+- Published as `@lucasjahn/hakuna-mcp`; Node >= 18.17; ESM; prepack build.
+- Bin exposes `hakuna-mcp`; minimal publish surface (dist + docs).
 
 Unreleased
 - TBA
