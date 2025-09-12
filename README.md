@@ -43,7 +43,14 @@ Generic MCP config:
 
 ## Tools and Parameters
 
-See [TOOLS.md](TOOLS.md) for a complete list, inputs, and output shapes. Conventions:
+Available tools (details in [TOOLS.md](TOOLS.md)):
+- `list_time_entries`, `get_time_entry`, `create_time_entry`, `update_time_entry`, `delete_time_entry` (disabled)
+- `get_timer`, `start_timer`, `stop_timer`
+- `find_projects`, `find_tasks`
+- `total_hours_in_period`, `hours_by_project`, `hours_on_day`
+- `clear_catalog_cache`
+
+Conventions:
 
 - Dates: `yyyy-mm-dd` (ISO) — e.g., `2025-09-12`
 - Times: `HH:mm` (24h) — e.g., `08:30`, `17:45`
