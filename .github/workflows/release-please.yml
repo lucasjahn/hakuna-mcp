@@ -1,0 +1,20 @@
+name: Release Please
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release PR / GitHub Release
+        uses: google-github-actions/release-please-action@v4
+        with:
+          release-type: node
+          package-name: "@lucasjahn/hakuna-mcp"
+          changelog-path: CHANGELOG.md
+          bump-minor-pre-major: true
+          bump-patch-for-minor-pre-major: true
+
