@@ -22,3 +22,12 @@ This project follows Conventional Commits and maintains this changelog manually.
 
 Unreleased
 - TBA
+
+## [0.2.1] - 2025-09-12
+
+### Changed
+- Update package metadata links (repository, bugs, homepage) to `lucasjahn/hakuna-mcp`.
+- Update CLI help URL accordingly.
+
+### Notes
+- Republish to update npm page links.

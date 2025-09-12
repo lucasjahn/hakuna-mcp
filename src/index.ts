@@ -5,7 +5,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import * as api from "./hakuna.js";
 
 // Create server
-const server = new McpServer({ name: "hakuna", version: "0.2.0" });
+const server = new McpServer({ name: "hakuna", version: "0.2.1" });
 
 // Simple CLI help
 const argv = process.argv.slice(2);
