@@ -1,11 +1,18 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+This project follows Conventional Commits for commit messages and maintains this changelog manually.
 
-This file is maintained by release-please based on Conventional Commits.
+Guidelines
+- Group entries by version and date.
+- Use sections when helpful: Added, Changed, Fixed, Removed.
+- Keep entries short and user-facing.
 
-- feat: new features
-- fix: bug fixes
-- chore/docs/refactor: internal changes
+Template
+```
+## [0.2.0] - 2025-09-12
+### Added
+- Initial public release: MCP server for Hakuna (hakuna.ch), CLI `hakuna-mcp`, tools documented in TOOLS.md.
+```
 
-The first release will be generated when the Release Please workflow runs on main.
+Unreleased
+- TBA

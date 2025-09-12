@@ -1,5 +1,10 @@
 # Hakuna MCP Server (Unofficial)
 
+![npm version](https://img.shields.io/npm/v/%40lucasjahn%2Fhakuna-mcp)
+![npm downloads](https://img.shields.io/npm/dm/%40lucasjahn%2Fhakuna-mcp)
+![license](https://img.shields.io/npm/l/%40lucasjahn%2Fhakuna-mcp)
+![node](https://img.shields.io/node/v/%40lucasjahn%2Fhakuna-mcp)
+
 Unofficial Model Context Protocol (MCP) server for Hakuna (hakuna.ch). This project is not affiliated with, endorsed by, or sponsored by the Hakuna team. It exposes Hakuna time‑tracking operations as MCP tools for LLM clients.
 
 ## Install
@@ -64,6 +69,29 @@ Project layout:
 - Deleting entries is disabled by design.
 - Rate limits are respected automatically; network calls use a single client.
 - Do not log or commit secrets. Configure `HAKUNA_TOKEN` via environment variables.
+
+## Release & Publish (manual)
+
+1) Update CHANGELOG.md with notable changes for the new version.
+2) Bump version in `package.json` (and keep `src/index.ts` server version in sync).
+3) Commit and tag:
+
+```bash
+git add -A
+git commit -m "chore(release): vX.Y.Z"
+git tag vX.Y.Z
+git push && git push --tags
+```
+
+4) Publish to npm (scoped package, public):
+
+```bash
+npm login
+yarn build
+npm publish --access public
+```
+
+5) Create a GitHub Release from tag `vX.Y.Z` (optional but recommended).
 
 ## Disclaimer
 
