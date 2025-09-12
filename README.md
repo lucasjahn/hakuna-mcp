@@ -43,7 +43,7 @@ Generic MCP config:
 
 ## Tools and Parameters
 
-See TOOLS.md for a complete list, inputs, and output shapes. Conventions:
+See [TOOLS.md](TOOLS.md) for a complete list, inputs, and output shapes. Conventions:
 
 - Dates: `yyyy-mm-dd` (ISO) — e.g., `2025-09-12`
 - Times: `HH:mm` (24h) — e.g., `08:30`, `17:45`
