@@ -70,29 +70,6 @@ Project layout:
 - Rate limits are respected automatically; network calls use a single client.
 - Do not log or commit secrets. Configure `HAKUNA_TOKEN` via environment variables.
 
-## Release & Publish (manual)
-
-1) Update CHANGELOG.md with notable changes for the new version.
-2) Bump version in `package.json` (and keep `src/index.ts` server version in sync).
-3) Commit and tag:
-
-```bash
-git add -A
-git commit -m "chore(release): vX.Y.Z"
-git tag vX.Y.Z
-git push && git push --tags
-```
-
-4) Publish to npm (scoped package, public):
-
-```bash
-npm login
-yarn build
-npm publish --access public
-```
-
-5) Create a GitHub Release from tag `vX.Y.Z` (optional but recommended).
-
 ## Disclaimer
 
 This is an independent, community-maintained integration targeting Hakuna (https://hakuna.ch). Use at your own discretion.
