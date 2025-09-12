@@ -1,0 +1,50 @@
+{
+  "name": "@lucasjahn/hakuna-mcp",
+  "version": "0.2.0",
+  "private": false,
+  "type": "module",
+  "bin": {
+    "hakuna-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "prepack": "tsc"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "description": "Unofficial MCP server for Hakuna (hakuna.ch) time-tracking tools.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "hakuna",
+    "time-tracking",
+    "hakuna.ch"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krautnerds/hakuna-mcp.git"
+  },
+  "author": "Lucas Jahn",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.2.0",
+    "zod": "^3.23.8",
+    "undici": "^6.19.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "TOOLS.md"
+  ]
+}
