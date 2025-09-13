@@ -1,8 +1,8 @@
 {
-  "dxt_version": "0.2.2",
+  "dxt_version": "0.2.3",
   "name": "hakuna-mcp",
   "display_name": "Hakuna (Unofficial)",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Bring Hakuna (hakuna.ch) time tracking to AI assistants: list/create/update time entries, start/stop timers, find projects/tasks, and get hour totals. Deletion is disabled for safety.",
   "author": {
     "name": "Lucas Jahn",
