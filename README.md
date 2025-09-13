@@ -7,6 +7,9 @@
 
 Bring Hakuna (hakuna.ch) time tracking into AI assistants via Model Context Protocol (MCP). Use natural language to list, create, and update time entries; start/stop timers; look up projects and tasks; and get quick hour totals by day or project. Deletion is intentionally disabled for safety.
 
+> ⚠️ Experimental Software Notice  
+> This MCP is experimental and under active development. While implemented with great care to prevent data loss through append-only description updates and other safety measures, it cannot be guaranteed to be completely safe. Please use with caution, especially in production environments. Always test in a non-critical workspace first. 🧪
+
 ## What You Can Do
 
 - "Log 1.5 hours to task 123 on Project A for yesterday"
@@ -50,7 +53,7 @@ Conventions:
 - Times: `HH:mm` (24h) — e.g., `08:30`, `17:45`
 - IDs: numbers; resolve via `find_projects` and `find_tasks`
 
-## Configure in MCP Clients
+## Configure in MCP Clients (Legacy)
 
 Example (Claude Desktop): create `~/.mcp/servers/hakuna.json`:
 
@@ -67,7 +70,7 @@ Generic MCP config:
 - Transport: stdio
 - Env: `HAKUNA_TOKEN` must be set
 
-## Development
+## Development & Contribution
 
 ```bash
 yarn dev    # run with tsx (dev)
