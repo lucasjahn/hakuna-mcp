@@ -1,15 +1,19 @@
 {
-  "dxt_version": "0.2.3",
+  "dxt_version": "0.2.4",
   "name": "hakuna-mcp",
-  "display_name": "Hakuna (Unofficial)",
-  "version": "0.2.3",
-  "description": "Bring Hakuna (hakuna.ch) time tracking to AI assistants: list/create/update time entries, start/stop timers, find projects/tasks, and get hour totals. Deletion is disabled for safety.",
+  "display_name": "hakuna.ch",
+  "version": "0.2.4",
+  "description": "Access hakuna.ch time-tracking functionalities and data via natural language.",
+  "long_description": "Bring Hakuna (hakuna.ch) time tracking to AI assistants: list/create/update time entries, start/stop timers, find projects/tasks, and get hour totals. Deletion is disabled for safety.",
   "author": {
     "name": "Lucas Jahn",
     "email": "lucas@krautnerds.de",
-    "url": "https://www.krautnerds.de"
+    "url": "https://github.com/lucasjahn/"
   },
-  "documentation": "https://github.com/lucasjahn/hakuna-mcp",
+  "icon": "icon.png",
+  "homepage": "https://www.hakuna.ch/",
+  "documentation": "https://github.com/lucasjahn/hakuna-mcp#readme",
+  "support": "https://github.com/lucasjahn/hakuna-mcp/issues",
   "server": {
     "type": "node",
     "entry_point": "dist/index.js",
@@ -45,6 +49,17 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lucasjahn/hakuna-mcp.git"
+  },
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=18.17"
+    }
   },
   "tools": [
     { "name": "list_time_entries", "description": "List time entries in a date range with optional project/task/user filters." },

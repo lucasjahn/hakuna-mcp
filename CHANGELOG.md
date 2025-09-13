@@ -45,3 +45,16 @@ Unreleased
 
 ### Chore
 - Ignore packaged `*.mcpb` files in git.
+
+## [0.2.4] - 2025-09-13
+
+### Added
+- Icon asset (`icon.png`) and manifest reference for better directory presence.
+
+### Changed
+- Bump versions to 0.2.4 in `package.json` and `manifest.json`.
+- Manifest metadata polish:
+  - `display_name` set to `hakuna.ch`.
+  - Shorter `description` and new `long_description` for clearer catalog text.
+  - Updated author URL, added `homepage`, `documentation` (README anchor), and `support` (GitHub Issues) links.
+  - Added `compatibility` block (Claude Desktop version, platforms, runtimes) to aid review and discovery.
