@@ -1,5 +1,23 @@
 # Hakuna MCP Server (Unofficial)
 
+Bring Hakuna (hakuna.ch) time tracking into AI assistants via Model Context Protocol (MCP). Use natural language to list, create, and update time entries; start/stop timers; look up projects and tasks; and get quick hour totals by day or project. Deletion is intentionally disabled for safety.
+
+## What You Can Do
+
+- "Log 1.5 hours to task 123 on Project A for yesterday"
+- "What did I track between 2025-09-01 and 2025-09-07?"
+- "Start a timer for the 'Client Meeting' task"
+- "How many hours did I spend per project last week?"
+- "Find the project named 'Website Redesign' and the task 'Home Page'"
+
+## Key Features
+
+- Time tracking: list/get/create/update time entries; start/stop timers
+- Quick analytics: total hours in a period, hours by project, hours for a day
+- Resolver tools: find projects/tasks by name substring to get IDs fast
+- Safe by design: delete is disabled to prevent accidental data loss
+- Solid ergonomics: clear input formats, rate limit handling, JSON responses
+
 ![npm version](https://img.shields.io/npm/v/%40lucasjahn%2Fhakuna-mcp)
 ![npm downloads](https://img.shields.io/npm/dm/%40lucasjahn%2Fhakuna-mcp)
 ![license](https://img.shields.io/npm/l/%40lucasjahn%2Fhakuna-mcp)
@@ -55,6 +73,10 @@ Available tools (details in [TOOLS.md](TOOLS.md)):
 - `find_projects`, `find_tasks`
 - `total_hours_in_period`, `hours_by_project`, `hours_on_day`
 - `clear_catalog_cache`
+
+Tips:
+- Dates use `yyyy-mm-dd` and times use 24h `HH:mm`.
+- Use `find_projects`/`find_tasks` first if you don’t know numeric IDs.
 
 Conventions:
 

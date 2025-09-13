@@ -2,8 +2,8 @@
   "dxt_version": "0.2.2",
   "name": "hakuna-mcp",
   "display_name": "Hakuna (Unofficial)",
-  "version": "0.2.1",
-  "description": "Unofficial MCP server for Hakuna (hakuna.ch)",
+  "version": "0.2.2",
+  "description": "Bring Hakuna (hakuna.ch) time tracking to AI assistants: list/create/update time entries, start/stop timers, find projects/tasks, and get hour totals. Deletion is disabled for safety.",
   "author": {
     "name": "Lucas Jahn",
     "email": "lucas@krautnerds.de",
@@ -27,7 +27,7 @@
     "HAKUNA_TOKEN": {
       "type": "string",
       "title": "Hakuna API Token",
-      "description": "Required API token from your Hakuna (hakuna.ch) account. Used to authenticate requests made by this extension. Generate/copy it from your Hakuna",
+      "description": "Required API token for your Hakuna (hakuna.ch) account. Generate it in Hakuna → Account Settings → API and paste it here.",
       "required": true,
       "sensitive": true
     }
