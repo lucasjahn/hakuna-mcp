@@ -1,5 +1,10 @@
 # Hakuna MCP Server (Unofficial)
 
+![npm version](https://img.shields.io/npm/v/%40lucasjahn%2Fhakuna-mcp)
+![npm downloads](https://img.shields.io/npm/dm/%40lucasjahn%2Fhakuna-mcp)
+![license](https://img.shields.io/npm/l/%40lucasjahn%2Fhakuna-mcp)
+![node](https://img.shields.io/node/v/%40lucasjahn%2Fhakuna-mcp)
+
 Bring Hakuna (hakuna.ch) time tracking into AI assistants via Model Context Protocol (MCP). Use natural language to list, create, and update time entries; start/stop timers; look up projects and tasks; and get quick hour totals by day or project. Deletion is intentionally disabled for safety.
 
 ## What You Can Do
@@ -18,52 +23,13 @@ Bring Hakuna (hakuna.ch) time tracking into AI assistants via Model Context Prot
 - Safe by design: delete is disabled to prevent accidental data loss
 - Solid ergonomics: clear input formats, rate limit handling, JSON responses
 
-![npm version](https://img.shields.io/npm/v/%40lucasjahn%2Fhakuna-mcp)
-![npm downloads](https://img.shields.io/npm/dm/%40lucasjahn%2Fhakuna-mcp)
-![license](https://img.shields.io/npm/l/%40lucasjahn%2Fhakuna-mcp)
-![node](https://img.shields.io/node/v/%40lucasjahn%2Fhakuna-mcp)
-
 Unofficial Model Context Protocol (MCP) server for Hakuna (hakuna.ch). This project is not affiliated with, endorsed by, or sponsored by the Hakuna team. It exposes Hakuna time‑tracking operations as MCP tools for LLM clients.
-
-## Install
-
-- Node.js 18.17+ required
-- NPM (recommended)
-
-```bash
-npm install -g @lucasjahn/hakuna-mcp
-# or run without a global install
-npx @lucasjahn/hakuna-mcp --help  # starts the server over stdio
-```
-
-Set your token before running:
-
-```bash
-export HAKUNA_TOKEN=YOUR_HAKUNA_API_TOKEN
-```
 
 ## Downloads (.mcpb)
 
 - Get the latest packaged Claude Desktop extension: https://github.com/lucasjahn/hakuna-mcp/releases/latest/download/hakuna-mcp.mcpb
 - Install in Claude Desktop: open Claude → Extensions → Install from file → select the downloaded `hakuna-mcp.mcpb`.
 - After install, open the extension’s Settings and set `HAKUNA_TOKEN`.
-
-## Configure in MCP Clients
-
-Example (Claude Desktop): create `~/.mcp/servers/hakuna.json`:
-
-```json
-{
-  "command": "hakuna-mcp",
-  "env": { "HAKUNA_TOKEN": "${env:HAKUNA_TOKEN}" }
-}
-```
-
-Generic MCP config:
-
-- Command: `hakuna-mcp`
-- Transport: stdio
-- Env: `HAKUNA_TOKEN` must be set
 
 ## Tools and Parameters
 
@@ -83,6 +49,23 @@ Conventions:
 - Dates: `yyyy-mm-dd` (ISO) — e.g., `2025-09-12`
 - Times: `HH:mm` (24h) — e.g., `08:30`, `17:45`
 - IDs: numbers; resolve via `find_projects` and `find_tasks`
+
+## Configure in MCP Clients
+
+Example (Claude Desktop): create `~/.mcp/servers/hakuna.json`:
+
+```json
+{
+  "command": "hakuna-mcp",
+  "env": { "HAKUNA_TOKEN": "${env:HAKUNA_TOKEN}" }
+}
+```
+
+Generic MCP config:
+
+- Command: `hakuna-mcp`
+- Transport: stdio
+- Env: `HAKUNA_TOKEN` must be set
 
 ## Development
 
