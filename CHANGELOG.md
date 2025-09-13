@@ -31,3 +31,17 @@ Unreleased
 
 ### Notes
 - Republish to update npm page links.
+
+## [0.2.2] - 2025-09-13
+
+### Added
+- GitHub Actions workflow to build and publish a GitHub Release with a packaged `.mcpb` using the Anthropic `mcpb` packer.
+- README “Downloads (.mcpb)” section with direct latest download link and install steps for Claude Desktop.
+- Yarn script `mcpb:pack` to locally produce `hakuna-mcp.mcpb` via `npx mcpb@latest pack`.
+
+### Changed
+- Manifest: add `permissions.network` and `permissions.env`, `min_runtime` (Node >= 18.17), `categories`, and richer `keywords` for better discovery.
+- Manifest: include a `tools` list (name + description only) for catalog/discovery.
+
+### Chore
+- Ignore packaged `*.mcpb` files in git.
