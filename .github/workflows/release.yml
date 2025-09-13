@@ -32,9 +32,26 @@ jobs:
       - name: Package .mcpb (Anthropic packer)
         run: yarn mcpb:pack
 
+      - name: Generate release notes from CHANGELOG.md
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          awk -v ver="$VERSION" '
+            $0 ~ "^## \\["ver"\\]" {flag=1; print; next}
+            /^## \\[/ && flag {exit}
+            flag {print}
+          ' CHANGELOG.md > RELEASE_NOTES.md || true
+          if [ ! -s RELEASE_NOTES.md ]; then
+            {
+              echo "## [$VERSION]"
+              echo
+              echo "See CHANGELOG.md for details."
+            } > RELEASE_NOTES.md
+          fi
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
             hakuna-mcp.mcpb
-          generate_release_notes: true
+          body_path: RELEASE_NOTES.md
+          generate_release_notes: false
