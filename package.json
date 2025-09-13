@@ -1,6 +1,6 @@
 {
   "name": "@lucasjahn/hakuna-mcp",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": false,
   "type": "module",
   "bin": {
@@ -10,7 +10,8 @@
     "build": "tsc",
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
-    "prepack": "tsc"
+    "prepack": "tsc",
+    "mcpb:pack": "npx --yes @anthropic-ai/mcpb pack"
   },
   "engines": {
     "node": ">=18.17"

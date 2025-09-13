@@ -315,6 +315,14 @@ server.registerTool(
 
 // --- Boot (stdio) ---
 async function main() {
+  // Surface unexpected errors to stderr so host logs capture them
+  process.on("uncaughtException", (err) => {
+    console.error("[hakuna-mcp] Uncaught exception:", err);
+  });
+  process.on("unhandledRejection", (reason) => {
+    console.error("[hakuna-mcp] Unhandled rejection:", reason);
+  });
+
   if (!process.env.HAKUNA_TOKEN) {
     console.error("Missing HAKUNA_TOKEN environment variable.");
     process.exit(1);

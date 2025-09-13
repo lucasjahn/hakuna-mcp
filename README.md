@@ -24,6 +24,12 @@ Set your token before running:
 export HAKUNA_TOKEN=YOUR_HAKUNA_API_TOKEN
 ```
 
+## Downloads (.mcpb)
+
+- Get the latest packaged Claude Desktop extension: https://github.com/lucasjahn/hakuna-mcp/releases/latest/download/hakuna-mcp.mcpb
+- Install in Claude Desktop: open Claude → Extensions → Install from file → select the downloaded `hakuna-mcp.mcpb`.
+- After install, open the extension’s Settings and set `HAKUNA_TOKEN`.
+
 ## Configure in MCP Clients
 
 Example (Claude Desktop): create `~/.mcp/servers/hakuna.json`:
@@ -70,6 +76,26 @@ Project layout:
 - `src/hakuna.ts` HTTP client + rate limit/cache
 - `TOOLS.md` Tool catalog and parameter guide
 - `AGENTS.md` Repo/contributor guidelines
+
+### Releasing downloadable .mcpb
+
+Releases attach a ready-to-install `hakuna-mcp.mcpb` asset for easy download. Create a semver tag to trigger the release workflow:
+
+```bash
+git tag v0.2.2
+git push origin v0.2.2
+```
+
+GitHub Actions builds the project, packages `hakuna-mcp.mcpb` using the Anthropic `mcpb` packer, and publishes a GitHub Release with the asset. Users can always download the latest from:
+
+- Latest: `https://github.com/lucasjahn/hakuna-mcp/releases/latest/download/hakuna-mcp.mcpb`
+
+Local packaging (optional):
+
+```bash
+yarn build
+yarn mcpb:pack   # produces hakuna-mcp.mcpb
+```
 
 ## Safety Notes
 
