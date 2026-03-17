@@ -2,6 +2,16 @@
 
 This project follows Conventional Commits and maintains this changelog manually.
 
+## [0.3.1] - 2026-03-17
+
+### Changed
+- Extracted API response interfaces and domain models into `src/types.ts` — all API methods now return typed generics instead of `unknown`.
+- Rewrote `src/hakuna.ts` as a `HakunaClient` class with constructor dependency injection (`HttpTransport`) and instance-level rate-limit/cache state.
+- Extracted duration math and aggregation logic into pure functions in `src/analytics.ts`.
+- Replaced 20 hand-written `registerTool` calls with a data-driven `ToolDefinition[]` array in `src/tools.ts`.
+- Slimmed `src/index.ts` from ~475 lines to ~75 lines (CLI help, registration loop, server boot only).
+- Updated `CLAUDE.md` architecture section to reflect new file structure.
+
 ## [0.3.0] - 2026-03-17
 
 ### Added
