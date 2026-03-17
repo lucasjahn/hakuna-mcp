@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'INPUT=$(cat); CMD=$(echo \"$INPUT\" | jq -r \".tool_input.command // empty\"); if [ -z \"$CMD\" ]; then exit 0; fi; if ! echo \"$CMD\" | grep -q \"git commit\"; then exit 0; fi; if echo \"$CMD\" | grep -iq \"co-authored-by\"; then echo \"BLOCKED: Co-Authored-By trailers are forbidden in this project. Remove the trailer and retry.\" >&2; exit 2; fi; MSG=$(echo \"$CMD\" | sed -n \"s/.*-m .*[\\\"\\x27]\\([^\\\"\\x27]*\\)[\\\"\\x27].*/\\1/p\"); if [ -n \"$MSG\" ]; then if ! echo \"$MSG\" | grep -qE \"^(feat|fix|docs|chore|ci|refactor|test|perf|style)(\\(.+\\))?: [a-z]\"; then echo \"BLOCKED: Commit message must follow conventional format: type(scope): lowercase description\" >&2; echo \"Valid types: feat, fix, docs, chore, ci, refactor, test, perf, style\" >&2; echo \"Got: $MSG\" >&2; exit 2; fi; fi; exit 0'"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'INPUT=$(cat); CMD=$(echo \"$INPUT\" | jq -r \".tool_input.command // empty\"); if [ -z \"$CMD\" ]; then exit 0; fi; if ! echo \"$CMD\" | grep -qE \"git tag v[0-9]\"; then exit 0; fi; cd \"$CLAUDE_PROJECT_DIR\" 2>/dev/null || exit 0; PKG_VER=$(node -p \"require(\\\"./package.json\\\").version\"); MAN_VER=$(node -p \"require(\\\"./manifest.json\\\").version\"); DXT_VER=$(node -p \"require(\\\"./manifest.json\\\").dxt_version\"); SRC_VER=$(grep -o \"version: \\\"[^\\\"]*\\\"\" src/index.ts | head -1 | sed \"s/version: \\\"//;s/\\\"//\"); if [ \"$PKG_VER\" != \"$MAN_VER\" ] || [ \"$PKG_VER\" != \"$DXT_VER\" ] || [ \"$PKG_VER\" != \"$SRC_VER\" ]; then echo \"BLOCKED: Version mismatch detected before tagging!\" >&2; echo \"  package.json:  $PKG_VER\" >&2; echo \"  manifest.json: $MAN_VER\" >&2; echo \"  dxt_version:   $DXT_VER\" >&2; echo \"  src/index.ts:  $SRC_VER\" >&2; exit 2; fi; exit 0'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'INPUT=$(cat); CMD=$(echo \"$INPUT\" | jq -r \".tool_input.command // empty\"); if [ -z \"$CMD\" ]; then exit 0; fi; if ! echo \"$CMD\" | grep -q \"git commit\"; then exit 0; fi; MSG=$(echo \"$CMD\" | sed -n \"s/.*-m .*[\\\"\\x27]\\([^\\\"\\x27]*\\)[\\\"\\x27].*/\\1/p\"); if echo \"$MSG\" | grep -qE \"^(feat|fix)\"; then cd \"$CLAUDE_PROJECT_DIR\" 2>/dev/null || exit 0; if ! git diff --name-only HEAD~1 2>/dev/null | grep -q \"CHANGELOG.md\"; then echo \"WARNING: You committed a feat/fix but CHANGELOG.md was not updated. Remember to add an entry.\" >&2; fi; fi; exit 0'"
+          }
+        ]
+      }
+    ]
+  }
+}
