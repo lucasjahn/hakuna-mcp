@@ -2,6 +2,28 @@
 
 This project follows Conventional Commits and maintains this changelog manually.
 
+## [0.3.0] - 2026-03-17
+
+### Added
+- New tools: `get_overview` (overtime/vacation balance), `list_absences` (absences by year), `get_current_user` (authenticated user profile), `list_absence_types` (available absence types), `get_company` (company info), `cancel_timer` (discard running timer).
+- Zod `.describe()` annotations on all tool input fields for better LLM guidance.
+- Input format validation: dates must match `YYYY-MM-DD`, times must match `HH:mm`.
+- MCP tool annotations (`readOnlyHint`, `destructiveHint`, `idempotentHint`) on all 20 tools.
+- Error handling: all tool handlers wrapped with try/catch returning structured `isError` responses instead of crashing.
+- Absence types cache (alongside existing projects/tasks cache).
+- Logging capability enabled on MCP server.
+
+### Fixed
+- `start_timer`: `task_id` changed from optional to required (matches Hakuna API requirement).
+- `start_timer`: added `start_time` parameter for overriding the start time.
+
+### Changed
+- Extracted all Zod schemas to `src/schemas.ts` for separation of concerns.
+- Replaced hand-written parameter types in `hakuna.ts` with types inferred from schemas.
+- Replaced `AnyArray` type alias and `any` return types with `unknown` for type safety.
+- Improved tool description strings with return format details and usage guidance.
+- `clear_catalog_cache` now also clears absence types cache.
+
 ## [0.2.0] - 2025-09-12
 
 ### Added
