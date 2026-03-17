@@ -8,7 +8,7 @@
 
 An unofficial MCP server for [Hakuna](https://hakuna.ch) time tracking. Use natural language to list, create, and update time entries; start and stop timers; look up projects and tasks; and get quick hour totals — all through any MCP-compatible AI assistant. Built on the Model Context Protocol (MCP) with stdio transport.
 
-**Why this server?** Hakuna's API requires structured HTTP calls with specific date/time formats and numeric IDs. This server wraps 14 tools behind a single MCP connection so your AI assistant handles the details — date formatting, ID resolution, rate limits — while you speak naturally.
+**Why this server?** Hakuna's API requires structured HTTP calls with specific date/time formats and numeric IDs. This server wraps 20 tools behind a single MCP connection so your AI assistant handles the details — date formatting, ID resolution, rate limits — while you speak naturally.
 
 > **Experimental Software Notice**
 > This MCP server is experimental and under active development. While implemented with care to prevent data loss (deletion disabled, append-only updates), use with caution in production environments. Always test in a non-critical workspace first.
@@ -37,26 +37,35 @@ Set `HAKUNA_TOKEN` in your environment, then configure your MCP client to run `h
 - "Start a timer for the 'Client Meeting' task"
 - "How many hours did I spend per project last week?"
 - "Find the project named 'Website Redesign' and the task 'Home Page'"
+- "Show me my overtime balance and remaining vacation days"
+- "List my absences for 2026"
 
-## Time Tracking Features
+## Tools
 
-| Domain | What you can do |
-|--------|-----------------|
-| **Time entries** | List, get, create, and update time entries with date/time ranges |
-| **Timer** | Start, stop, and check current timer status |
-| **Projects & tasks** | Find projects and tasks by name substring to resolve IDs |
-| **Analytics** | Total hours in a period, hours by project, hours for a single day |
-| **Cache** | Clear in-memory project/task catalog cache on demand |
+20 tools available (full parameter details in [TOOLS.md](TOOLS.md)):
 
-### Tools
-
-14 tools available (details in [TOOLS.md](TOOLS.md)):
-
-- `list_time_entries`, `get_time_entry`, `create_time_entry`, `update_time_entry`, `delete_time_entry` (disabled)
-- `get_timer`, `start_timer`, `stop_timer`
-- `find_projects`, `find_tasks`
-- `total_hours_in_period`, `hours_by_project`, `hours_on_day`
-- `clear_catalog_cache`
+| Tool | Description |
+|------|-------------|
+| `list_time_entries` | List time entries in a date range with optional filters |
+| `get_time_entry` | Fetch a single time entry by ID |
+| `create_time_entry` | Create a new time entry |
+| `update_time_entry` | Update fields on an existing time entry (PATCH) |
+| `delete_time_entry` | Disabled — always returns a refusal message |
+| `get_timer` | Read the currently running timer |
+| `start_timer` | Start a new timer |
+| `stop_timer` | Stop the running timer and save as time entry |
+| `cancel_timer` | Discard the running timer without saving |
+| `find_projects` | Search projects by name substring |
+| `find_tasks` | Search tasks by name substring |
+| `total_hours_in_period` | Sum durations in a date range |
+| `hours_by_project` | Group and sum durations by project |
+| `hours_on_day` | Sum durations for a single date |
+| `get_overview` | Get overtime balance and vacation days |
+| `list_absences` | List absences for a given year |
+| `get_current_user` | Get the authenticated user's profile |
+| `list_absence_types` | List available absence types (cached) |
+| `get_company` | Get company info and settings |
+| `clear_catalog_cache` | Clear cached projects, tasks, and absence types |
 
 ### Conventions
 
@@ -114,12 +123,16 @@ Create `~/.mcp/servers/hakuna.json`:
 ```
 hakuna-mcp/
   src/
-    index.ts     # MCP server, 14 tool registrations, CLI help, analytics helpers
-    hakuna.ts    # HTTP client (undici), rate-limit handling, catalog caching
-  dist/          # Compiled output (tsc)
-  TOOLS.md       # Tool catalog and parameter guide
-  CHANGELOG.md   # Release history
-  manifest.json  # Claude Desktop extension manifest
+    types.ts       # API response interfaces and domain models
+    schemas.ts     # Zod input schemas and inferred param types
+    hakuna.ts      # HakunaClient class — HTTP, rate limits, caching
+    analytics.ts   # Pure functions for duration math and aggregation
+    tools.ts       # Data-driven tool definitions (all 20 handlers)
+    index.ts       # CLI help, client creation, registration loop, boot
+  dist/            # Compiled output (tsc)
+  TOOLS.md         # Tool catalog and parameter guide
+  CHANGELOG.md     # Release history
+  manifest.json    # Claude Desktop extension manifest
 ```
 
 ## Development
@@ -136,8 +149,8 @@ yarn mcpb:pack  # package .mcpb for Claude Desktop
 Releases attach a ready-to-install `hakuna-mcp.mcpb` asset. Create a semver tag to trigger the release workflow:
 
 ```bash
-git tag v0.2.5
-git push origin v0.2.5
+git tag v0.3.1
+git push origin v0.3.1
 ```
 
 GitHub Actions builds the project, packages `hakuna-mcp.mcpb`, and publishes a GitHub Release with changelog notes. Local packaging:
