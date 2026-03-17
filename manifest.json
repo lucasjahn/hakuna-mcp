@@ -1,8 +1,8 @@
 {
-  "dxt_version": "0.2.4",
+  "dxt_version": "0.2.5",
   "name": "hakuna-mcp",
   "display_name": "hakuna.ch",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Access hakuna.ch time-tracking functionalities and data via natural language.",
   "long_description": "Bring Hakuna (hakuna.ch) time tracking to AI assistants: list/create/update time entries, start/stop timers, find projects/tasks, and get hour totals. Deletion is disabled for safety.",
   "author": {
@@ -62,19 +62,61 @@
     }
   },
   "tools": [
-    { "name": "list_time_entries", "description": "List time entries in a date range with optional project/task/user filters." },
-    { "name": "get_time_entry", "description": "Fetch a single time entry by id." },
-    { "name": "create_time_entry", "description": "Create a time entry. Times must be 'HH:mm' (24h). task_id required; project_id optional." },
-    { "name": "update_time_entry", "description": "PATCH any subset of fields on a time entry by id." },
-    { "name": "delete_time_entry", "description": "Deletion is disabled to prevent accidental data loss." },
-    { "name": "get_timer", "description": "Read current timer." },
-    { "name": "start_timer", "description": "Start a timer (optional project/task and note)." },
-    { "name": "stop_timer", "description": "Stop the current timer (optionally set end_time HH:mm)." },
-    { "name": "find_projects", "description": "Find projects by name substring. Returns id and name." },
-    { "name": "find_tasks", "description": "Find tasks by name substring (optionally for a project)." },
-    { "name": "total_hours_in_period", "description": "Sum durations within [start_date, end_date]. Optional project/task filters. Returns decimal hours." },
-    { "name": "hours_by_project", "description": "Group and sum durations by project within [start_date, end_date]." },
-    { "name": "hours_on_day", "description": "Sum durations for a single date. Optional project/task filters. Returns decimal hours." },
-    { "name": "clear_catalog_cache", "description": "Clears in-memory cache for projects/tasks." }
+    {
+      "name": "list_time_entries",
+      "description": "List time entries in a date range with optional project/task/user filters."
+    },
+    {
+      "name": "get_time_entry",
+      "description": "Fetch a single time entry by id."
+    },
+    {
+      "name": "create_time_entry",
+      "description": "Create a time entry. Times must be 'HH:mm' (24h). task_id required; project_id optional."
+    },
+    {
+      "name": "update_time_entry",
+      "description": "PATCH any subset of fields on a time entry by id."
+    },
+    {
+      "name": "delete_time_entry",
+      "description": "Deletion is disabled to prevent accidental data loss."
+    },
+    {
+      "name": "get_timer",
+      "description": "Read current timer."
+    },
+    {
+      "name": "start_timer",
+      "description": "Start a timer (optional project/task and note)."
+    },
+    {
+      "name": "stop_timer",
+      "description": "Stop the current timer (optionally set end_time HH:mm)."
+    },
+    {
+      "name": "find_projects",
+      "description": "Find projects by name substring. Returns id and name."
+    },
+    {
+      "name": "find_tasks",
+      "description": "Find tasks by name substring (optionally for a project)."
+    },
+    {
+      "name": "total_hours_in_period",
+      "description": "Sum durations within [start_date, end_date]. Optional project/task filters. Returns decimal hours."
+    },
+    {
+      "name": "hours_by_project",
+      "description": "Group and sum durations by project within [start_date, end_date]."
+    },
+    {
+      "name": "hours_on_day",
+      "description": "Sum durations for a single date. Optional project/task filters. Returns decimal hours."
+    },
+    {
+      "name": "clear_catalog_cache",
+      "description": "Clears in-memory cache for projects/tasks."
+    }
   ]
 }
