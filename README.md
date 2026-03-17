@@ -1,14 +1,34 @@
-# Hakuna MCP Server (Unofficial)
+# Hakuna MCP Server — Unofficial Time Tracking for AI Assistants
 
-![npm version](https://img.shields.io/npm/v/%40lucasjahn%2Fhakuna-mcp)
-![npm downloads](https://img.shields.io/npm/dm/%40lucasjahn%2Fhakuna-mcp)
-![license](https://img.shields.io/npm/l/%40lucasjahn%2Fhakuna-mcp)
-![node](https://img.shields.io/node/v/%40lucasjahn%2Fhakuna-mcp)
+[![npm version](https://img.shields.io/npm/v/%40lucasjahn%2Fhakuna-mcp)](https://www.npmjs.com/package/@lucasjahn/hakuna-mcp)
+[![npm downloads](https://img.shields.io/npm/dm/%40lucasjahn%2Fhakuna-mcp)](https://www.npmjs.com/package/@lucasjahn/hakuna-mcp)
+[![license](https://img.shields.io/npm/l/%40lucasjahn%2Fhakuna-mcp)](./LICENSE)
+[![node](https://img.shields.io/node/v/%40lucasjahn%2Fhakuna-mcp)](https://nodejs.org/)
+[![MCP](https://img.shields.io/badge/MCP-server-7C3AED.svg)](https://modelcontextprotocol.io/)
 
-Bring Hakuna (hakuna.ch) time tracking into AI assistants via Model Context Protocol (MCP). Use natural language to list, create, and update time entries; start/stop timers; look up projects and tasks; and get quick hour totals by day or project. Deletion is intentionally disabled for safety.
+An unofficial MCP server for [Hakuna](https://hakuna.ch) time tracking. Use natural language to list, create, and update time entries; start and stop timers; look up projects and tasks; and get quick hour totals — all through any MCP-compatible AI assistant. Built on the Model Context Protocol (MCP) with stdio transport.
 
-> ⚠️ Experimental Software Notice  
-> This MCP is experimental and under active development. While implemented with great care to prevent data loss through append-only description updates and other safety measures, it cannot be guaranteed to be completely safe. Please use with caution, especially in production environments. Always test in a non-critical workspace first. 🧪
+**Why this server?** Hakuna's API requires structured HTTP calls with specific date/time formats and numeric IDs. This server wraps 14 tools behind a single MCP connection so your AI assistant handles the details — date formatting, ID resolution, rate limits — while you speak naturally.
+
+> **Experimental Software Notice**
+> This MCP server is experimental and under active development. While implemented with care to prevent data loss (deletion disabled, append-only updates), use with caution in production environments. Always test in a non-critical workspace first.
+
+## Quickstart
+
+### Claude Desktop (.mcpb)
+
+1. Download the latest extension: [hakuna-mcp.mcpb](https://github.com/lucasjahn/hakuna-mcp/releases/latest/download/hakuna-mcp.mcpb)
+2. In Claude Desktop: Extensions → Install from file → select `hakuna-mcp.mcpb`
+3. Open the extension's Settings and set your `HAKUNA_TOKEN`
+4. Start asking about your time entries
+
+### npm (any MCP client)
+
+```bash
+npm install -g @lucasjahn/hakuna-mcp
+```
+
+Set `HAKUNA_TOKEN` in your environment, then configure your MCP client to run `hakuna-mcp` via stdio.
 
 ## What You Can Do
 
@@ -18,44 +38,63 @@ Bring Hakuna (hakuna.ch) time tracking into AI assistants via Model Context Prot
 - "How many hours did I spend per project last week?"
 - "Find the project named 'Website Redesign' and the task 'Home Page'"
 
-## Key Features
+## Time Tracking Features
 
-- Time tracking: list/get/create/update time entries; start/stop timers
-- Quick analytics: total hours in a period, hours by project, hours for a day
-- Resolver tools: find projects/tasks by name substring to get IDs fast
-- Safe by design: delete is disabled to prevent accidental data loss
-- Solid ergonomics: clear input formats, rate limit handling, JSON responses
+| Domain | What you can do |
+|--------|-----------------|
+| **Time entries** | List, get, create, and update time entries with date/time ranges |
+| **Timer** | Start, stop, and check current timer status |
+| **Projects & tasks** | Find projects and tasks by name substring to resolve IDs |
+| **Analytics** | Total hours in a period, hours by project, hours for a single day |
+| **Cache** | Clear in-memory project/task catalog cache on demand |
 
-Unofficial Model Context Protocol (MCP) server for Hakuna (hakuna.ch). This project is not affiliated with, endorsed by, or sponsored by the Hakuna team. It exposes Hakuna time‑tracking operations as MCP tools for LLM clients.
+### Tools
 
-## Downloads (.mcpb)
+14 tools available (details in [TOOLS.md](TOOLS.md)):
 
-- Get the latest packaged Claude Desktop extension: https://github.com/lucasjahn/hakuna-mcp/releases/latest/download/hakuna-mcp.mcpb
-- Install in Claude Desktop: open Claude → Extensions → Install from file → select the downloaded `hakuna-mcp.mcpb`.
-- After install, open the extension’s Settings and set `HAKUNA_TOKEN`.
-
-## Tools and Parameters
-
-Available tools (details in [TOOLS.md](TOOLS.md)):
 - `list_time_entries`, `get_time_entry`, `create_time_entry`, `update_time_entry`, `delete_time_entry` (disabled)
 - `get_timer`, `start_timer`, `stop_timer`
 - `find_projects`, `find_tasks`
 - `total_hours_in_period`, `hours_by_project`, `hours_on_day`
 - `clear_catalog_cache`
 
-Tips:
-- Dates use `yyyy-mm-dd` and times use 24h `HH:mm`.
-- Use `find_projects`/`find_tasks` first if you don’t know numeric IDs.
+### Conventions
 
-Conventions:
+| Format | Pattern | Example |
+|--------|---------|---------|
+| Dates | `yyyy-mm-dd` (ISO) | `2025-09-12` |
+| Times | `HH:mm` (24h) | `08:30`, `17:45` |
+| IDs | Numbers | Resolve via `find_projects` / `find_tasks` |
 
-- Dates: `yyyy-mm-dd` (ISO) — e.g., `2025-09-12`
-- Times: `HH:mm` (24h) — e.g., `08:30`, `17:45`
-- IDs: numbers; resolve via `find_projects` and `find_tasks`
+## Setup — Connect Your Hakuna API Token
 
-## Configure in MCP Clients (Legacy)
+### Getting your token
 
-Example (Claude Desktop): create `~/.mcp/servers/hakuna.json`:
+1. Log in to [hakuna.ch](https://hakuna.ch)
+2. Go to Account Settings → API
+3. Copy your API token
+
+### Option A: Environment variable (recommended)
+
+Export in your shell profile (`~/.zshrc` or `~/.bashrc`):
+
+```bash
+export HAKUNA_TOKEN=your-api-token
+```
+
+### Option B: Project `.env` file
+
+Add to your project's `.env` file:
+
+```
+HAKUNA_TOKEN=your-api-token
+```
+
+## Configure in MCP Clients
+
+### Claude Desktop (legacy JSON config)
+
+Create `~/.mcp/servers/hakuna.json`:
 
 ```json
 {
@@ -64,53 +103,67 @@ Example (Claude Desktop): create `~/.mcp/servers/hakuna.json`:
 }
 ```
 
-Generic MCP config:
+### Generic MCP config
 
-- Command: `hakuna-mcp`
-- Transport: stdio
-- Env: `HAKUNA_TOKEN` must be set
+- **Command**: `hakuna-mcp`
+- **Transport**: stdio
+- **Env**: `HAKUNA_TOKEN` must be set
 
-## Development & Contribution
+## Architecture
 
-```bash
-yarn dev    # run with tsx (dev)
-yarn build  # compile to dist/
-yarn start  # run compiled build
+```
+hakuna-mcp/
+  src/
+    index.ts     # MCP server, 14 tool registrations, CLI help, analytics helpers
+    hakuna.ts    # HTTP client (undici), rate-limit handling, catalog caching
+  dist/          # Compiled output (tsc)
+  TOOLS.md       # Tool catalog and parameter guide
+  CHANGELOG.md   # Release history
+  manifest.json  # Claude Desktop extension manifest
 ```
 
-Project layout:
-
-- `src/index.ts` MCP server + tools
-- `src/hakuna.ts` HTTP client + rate limit/cache
-- `TOOLS.md` Tool catalog and parameter guide
-- `AGENTS.md` Repo/contributor guidelines
-
-### Releasing downloadable .mcpb
-
-Releases attach a ready-to-install `hakuna-mcp.mcpb` asset for easy download. Create a semver tag to trigger the release workflow:
+## Development
 
 ```bash
-git tag v0.2.2
-git push origin v0.2.2
+yarn dev        # run with tsx (transpile-on-the-fly)
+yarn build      # compile to dist/
+yarn start      # run compiled dist/index.js
+yarn mcpb:pack  # package .mcpb for Claude Desktop
 ```
 
-GitHub Actions builds the project, packages `hakuna-mcp.mcpb` using the Anthropic `mcpb` packer, and publishes a GitHub Release with the asset. Users can always download the latest from:
+### Releasing
 
-- Latest: `https://github.com/lucasjahn/hakuna-mcp/releases/latest/download/hakuna-mcp.mcpb`
-
-Local packaging (optional):
+Releases attach a ready-to-install `hakuna-mcp.mcpb` asset. Create a semver tag to trigger the release workflow:
 
 ```bash
-yarn build
-yarn mcpb:pack   # produces hakuna-mcp.mcpb
+git tag v0.2.5
+git push origin v0.2.5
 ```
 
-## Safety Notes
+GitHub Actions builds the project, packages `hakuna-mcp.mcpb`, and publishes a GitHub Release with changelog notes. Local packaging:
 
-- Deleting entries is disabled by design.
-- Rate limits are respected automatically; network calls use a single client.
-- Do not log or commit secrets. Configure `HAKUNA_TOKEN` via environment variables.
+```bash
+yarn build && yarn mcpb:pack
+```
+
+## Safety
+
+- **Deletion disabled** by design — prevents accidental data loss
+- **Rate limits** respected automatically with a single HTTP client
+- **Secrets** never logged or committed — configure `HAKUNA_TOKEN` via environment only
+
+## Version History
+
+See [CHANGELOG.md](./CHANGELOG.md) for the full release history.
 
 ## Disclaimer
 
-This is an independent, community-maintained integration targeting Hakuna (https://hakuna.ch). Use at your own discretion.
+This is an independent, community-maintained integration for [Hakuna](https://hakuna.ch). Not affiliated with, endorsed by, or sponsored by the Hakuna team. Use at your own discretion.
+
+## License
+
+MIT
+
+---
+
+Built by [Lucas Jahn](https://github.com/lucasjahn)
