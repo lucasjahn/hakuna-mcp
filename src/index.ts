@@ -22,7 +22,7 @@ import {
 
 // Create server
 const server = new McpServer(
-  { name: "hakuna", version: "0.2.5" },
+  { name: "hakuna", version: "0.3.0" },
   { capabilities: { logging: {} } }
 );
 
