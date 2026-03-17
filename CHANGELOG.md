@@ -20,8 +20,17 @@ This project follows Conventional Commits and maintains this changelog manually.
 - Published as `@lucasjahn/hakuna-mcp`; Node >= 18.17; ESM; prepack build.
 - Bin exposes `hakuna-mcp`; minimal publish surface (dist + docs).
 
-Unreleased
-- TBA
+## [0.2.5] - 2026-03-17
+
+### Fixed
+- Sync McpServer version string in `src/index.ts` to match published 0.2.4 (was stuck at 0.2.1).
+
+### Added
+- `CLAUDE.md` with project conventions, commit rules, release process, and version sync checklist.
+- Claude Code hooks (`.claude/settings.json`) for commit validation: conventional commit format, Co-Authored-By blocking, version sync check on tags, changelog freshness reminder.
+
+### Chore
+- Add `.claude/settings.local.json` to `.gitignore`.
 
 ## [0.2.1] - 2025-09-12
 
