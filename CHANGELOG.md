@@ -2,6 +2,14 @@
 
 This project follows Conventional Commits and maintains this changelog manually.
 
+## [0.3.2] - 2026-03-17
+
+### Fixed
+- Renamed `dxt_version` to `manifest_version` in `manifest.json` so `@anthropic-ai/mcpb pack` succeeds (was using old DXT field name with wrong value).
+
+### Changed
+- Updated `CLAUDE.md` version sync docs to reflect that `manifest_version` is the MCPB spec version, not the app version.
+
 ## [0.3.1] - 2026-03-17
 
 ### Changed
