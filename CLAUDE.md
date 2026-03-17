@@ -9,9 +9,13 @@
 
 ## Architecture
 
-- `src/index.ts` — MCP server, tool registrations (14 tools), CLI help, analytics helpers
-- `src/hakuna.ts` — HTTP client (undici), rate-limit state, catalog caching
-- Rule: new API calls go in `hakuna.ts`, new tool registrations go in `index.ts`
+- `src/types.ts` — API response interfaces, HttpTransport abstraction, domain models
+- `src/schemas.ts` — Zod input schemas + inferred param types for tool inputs
+- `src/hakuna.ts` — HakunaClient class with constructor DI, typed returns, instance-level caching/rate-limiting
+- `src/analytics.ts` — Pure functions for duration math and aggregation (no side effects)
+- `src/tools.ts` — Data-driven ToolDefinition[] array with all 20 tool handlers
+- `src/index.ts` — ~75 lines: CLI help, client creation, registration loop, server boot
+- Rule: new API calls go in `hakuna.ts`, new tool definitions go in `tools.ts`, new response types in `types.ts`
 - Deletion is intentionally disabled for safety
 
 ## Commands
