@@ -115,8 +115,32 @@
       "description": "Sum durations for a single date. Optional project/task filters. Returns decimal hours."
     },
     {
+      "name": "cancel_timer",
+      "description": "Discard the running timer without saving a time entry."
+    },
+    {
+      "name": "get_overview",
+      "description": "Get overtime balance and vacation days (redeemed/remaining)."
+    },
+    {
+      "name": "list_absences",
+      "description": "List absences (vacation, sick leave, etc.) for a given year."
+    },
+    {
+      "name": "get_current_user",
+      "description": "Get the currently authenticated user profile."
+    },
+    {
+      "name": "list_absence_types",
+      "description": "List available absence types (vacation, sick, unpaid, etc.)."
+    },
+    {
+      "name": "get_company",
+      "description": "Get company info including name, settings, and features."
+    },
+    {
       "name": "clear_catalog_cache",
-      "description": "Clears in-memory cache for projects/tasks."
+      "description": "Clear in-memory cache for projects, tasks, and absence types."
     }
   ]
 }

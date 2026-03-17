@@ -1,5 +1,14 @@
 import { request } from "undici";
 import { setTimeout as delay } from "node:timers/promises";
+import type {
+  ListTimeEntriesParams,
+  CreateTimeEntryParams,
+  UpdateTimeEntryPatch,
+  StartTimerParams,
+  StopTimerParams,
+  CancelTimerParams,
+  ListAbsencesParams,
+} from "./schemas.js";
 
 const BASE = "https://app.hakuna.ch/api/v1";
 
@@ -23,7 +32,7 @@ async function respectRateLimit() {
 async function http<T>(
   method: "GET"|"POST"|"PATCH"|"DELETE"|"PUT",
   path: string,
-  body?: any,
+  body?: Record<string, unknown>,
   query?: Record<string, string | number | undefined>
 ): Promise<{ data: T, rate?: { limit: number, remaining: number, resetSec: number } }> {
   await respectRateLimit();
@@ -61,63 +70,71 @@ async function http<T>(
 }
 
 // --- Personal: time entries ---
-export async function listTimeEntries(params: {
-  start_date: string; end_date: string;
-  project_id?: number; task_id?: number; user_id?: number;
-}) {
-  return http<any>("GET", "/time_entries", undefined, params);
+export async function listTimeEntries(params: ListTimeEntriesParams) {
+  return http<unknown>("GET", "/time_entries", undefined, params);
 }
 export async function getTimeEntry(id: number) {
-  return http<any>("GET", `/time_entries/${id}`);
+  return http<unknown>("GET", `/time_entries/${id}`);
 }
-export async function createTimeEntry(body: {
-  date: string; start_time: string; end_time: string;
-  task_id: number; project_id?: number; note?: string; user_id?: number;
-}) {
-  return http<any>("POST", "/time_entries", body);
+export async function createTimeEntry(body: CreateTimeEntryParams) {
+  return http<unknown>("POST", "/time_entries", body as unknown as Record<string, unknown>);
 }
-export async function updateTimeEntry(id: number, patch: Partial<{
-  date: string; start_time: string; end_time: string;
-  task_id: number; project_id: number; note: string;
-}>) {
-  return http<any>("PATCH", `/time_entries/${id}`, patch);
+export async function updateTimeEntry(id: number, patch: UpdateTimeEntryPatch) {
+  return http<unknown>("PATCH", `/time_entries/${id}`, patch as unknown as Record<string, unknown>);
 }
 export async function deleteTimeEntry(id: number) {
-  return http<any>("DELETE", `/time_entries/${id}`);
+  return http<unknown>("DELETE", `/time_entries/${id}`);
 }
 
 // --- Timer ---
 export async function getTimer(params?: { user_id?: number }) {
-  return http<any>("GET", "/timer", undefined, params);
+  return http<unknown>("GET", "/timer", undefined, params);
 }
-export async function startTimer(body?: { project_id?: number; task_id?: number; note?: string }) {
-  return http<any>("POST", "/timer", body ?? {});
+export async function startTimer(body: StartTimerParams) {
+  return http<unknown>("POST", "/timer", body as unknown as Record<string, unknown>);
 }
-export async function stopTimer(params?: { end_time?: string; user_id?: number }) {
-  return http<any>("PUT", "/timer", undefined, params);
+export async function stopTimer(params?: StopTimerParams) {
+  return http<unknown>("PUT", "/timer", undefined, params);
+}
+export async function cancelTimer(params?: CancelTimerParams) {
+  return http<unknown>("DELETE", "/timer", undefined, params);
+}
+
+// --- Overview, absences, user, company ---
+export async function getOverview() {
+  return http<unknown>("GET", "/overview");
+}
+export async function listAbsences(params: ListAbsencesParams) {
+  return http<unknown>("GET", "/absences", undefined, params);
+}
+export async function getCurrentUser() {
+  return http<unknown>("GET", "/users/me");
+}
+export async function getCompany() {
+  return http<unknown>("GET", "/company");
 }
 
 // --- Catalog for name → id resolution (with lightweight cache) ---
-type AnyArray = any[];
 
-let projectsCache: { data: AnyArray; timestamp: number } | null = null;
-const tasksCache = new Map<string, { data: AnyArray; timestamp: number }>();
+let projectsCache: { data: unknown[]; timestamp: number } | null = null;
+const tasksCache = new Map<string, { data: unknown[]; timestamp: number }>();
+let absenceTypesCache: { data: unknown[]; timestamp: number } | null = null;
 
 export function clearCatalogCache() {
   projectsCache = null;
   tasksCache.clear();
+  absenceTypesCache = null;
 }
 
 export async function listProjects(params?: { search?: string }) {
   const search = params?.search?.trim();
   if (!search) {
-    if (projectsCache) return { data: projectsCache.data } as any;
-    const res = await http<any[]>("GET", "/projects");
+    if (projectsCache) return { data: projectsCache.data };
+    const res = await http<unknown[]>("GET", "/projects");
     projectsCache = { data: Array.isArray(res.data) ? res.data : [], timestamp: Date.now() };
     return res;
   }
-  // For searched queries, bypass cache to respect server-side filtering
-  return http<any[]>("GET", "/projects", undefined, { search });
+  return http<unknown[]>("GET", "/projects", undefined, { search });
 }
 
 export async function listTasks(params?: { search?: string; project_id?: number }) {
@@ -126,11 +143,17 @@ export async function listTasks(params?: { search?: string; project_id?: number 
   if (!search) {
     const key = `project:${pid ?? "all"}`;
     const cached = tasksCache.get(key);
-    if (cached) return { data: cached.data } as any;
-    const res = await http<any[]>("GET", "/tasks", undefined, pid ? { project_id: pid } : undefined);
+    if (cached) return { data: cached.data };
+    const res = await http<unknown[]>("GET", "/tasks", undefined, pid ? { project_id: pid } : undefined);
     tasksCache.set(key, { data: Array.isArray(res.data) ? res.data : [], timestamp: Date.now() });
     return res;
   }
-  // For searched queries, bypass cache
-  return http<any[]>("GET", "/tasks", undefined, { search, project_id: pid });
+  return http<unknown[]>("GET", "/tasks", undefined, { search, project_id: pid });
+}
+
+export async function listAbsenceTypes() {
+  if (absenceTypesCache) return { data: absenceTypesCache.data };
+  const res = await http<unknown[]>("GET", "/absence_types");
+  absenceTypesCache = { data: Array.isArray(res.data) ? res.data : [], timestamp: Date.now() };
+  return res;
 }
