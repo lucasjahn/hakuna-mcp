@@ -71,8 +71,9 @@
 
 - `package.json` → `"version"`
 - `manifest.json` → `"version"`
-- `manifest.json` → `"dxt_version"`
 - `src/index.ts` → McpServer constructor version string
+
+Note: `manifest.json` → `"manifest_version"` is the MCPB spec version (currently `"0.2"`) and is NOT synced with the app version.
 
 ## Semantic Versioning
 
@@ -85,7 +86,7 @@
 1. Ensure all changes are committed on main
 2. Update CHANGELOG.md: move Unreleased items into `## [X.Y.Z] - YYYY-MM-DD`
 3. Commit: `docs(changelog): add X.Y.Z release notes`
-4. Bump version in ALL locations (package.json, manifest.json x2, src/index.ts)
+4. Bump version in ALL locations (package.json, manifest.json, src/index.ts)
 5. Commit: `chore(release): bump version to X.Y.Z`
 6. Create tag: `git tag vX.Y.Z`
 7. Push: `git push origin main && git push origin vX.Y.Z`

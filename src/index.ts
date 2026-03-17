@@ -51,7 +51,7 @@ async function main() {
 
   const client = createClient(process.env.HAKUNA_TOKEN);
   const server = new McpServer(
-    { name: "hakuna", version: "0.3.1" },
+    { name: "hakuna", version: "0.3.2" },
     { capabilities: { logging: {} } }
   );
 
